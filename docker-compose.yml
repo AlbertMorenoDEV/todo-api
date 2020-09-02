@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: etc/dev/docker/server/Dockerfile
     ports:
       - "8080:8080"
     restart: unless-stopped
@@ -15,6 +15,8 @@ services:
       REDIS_URL: redis:6379
     networks:
       - backend
+    volumes:
+      - ./:/app
 
   redis:
     image: "redis:alpine"

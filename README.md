@@ -18,3 +18,4 @@
 ## Resources
 - API Example: https://thenewstack.io/make-a-restful-json-api-go/ > https://github.com/corylanou/tns-restful-json-api
 - Docker Setup Example: https://github.com/callicoder/go-docker-compose
+- Hot reload: https://levelup.gitconnected.com/docker-for-go-development-a27141f36ba9

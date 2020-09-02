@@ -4,15 +4,14 @@ LABEL maintainer="Albert Moreno <albert.moreno.dev@gmail.com>"
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
+COPY ../../../../go.mod go.sum ./
 
 RUN go mod download
 
-COPY . .
+COPY ../../../.. .
 
-# RUN cd cmd/server && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
-# RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server ./cmd/server
 WORKDIR /app/cmd/server
+
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
 
 ######## Start a new stage from scratch #######
