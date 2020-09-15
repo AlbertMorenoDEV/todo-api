@@ -1,49 +1,21 @@
-PROJECT_NAME := "go-ddd-playground"
-PKG := "github.com/AlbertMorenoDEV/$(PROJECT_NAME)"
-PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
-GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
-EMAIL := "albert.moreno.dev@gmail.com"
+# Go parameters
+MAIN_PATH=cmd/api/main.go
+BINARY_NAME=$(BINARY_PATH)/server
+BINARY_PATH=bin
 
-.PHONY: all dep lint vet test test-coverage build clean
- 
-all: build
-
-dep: ## Get the dependencies
-	@go mod download
-
-lint: ## Lint Golang files
-	@golint -set_exit_status ${PKG_LIST}
-
-vet: ## Run go vet
-	@go vet ${PKG_LIST}
+run: ## Build and run the application
+	go build -o $(BINARY_NAME) -race $(MAIN_PATH)
+	./$(BINARY_NAME)
 
 test: ## Run unittests
-	@go test -short ${PKG_LIST}
+	go test -race -v -timeout=10s ./...
 
-test-dev: ## Run unittests
-	@go test ./... -v --bench . --benchmem --race
-
-test-coverage: ## Run tests with coverage
-	@go test -short -coverprofile cover.out -covermode=atomic ${PKG_LIST} 
-	@cat cover.out >> coverage.txt
-
-build: dep ## Build the binary file
-	@go build -i -o $(PROJECT_NAME) $(PKG)
- 
 clean: ## Remove previous build
-	@rm -f $(PROJECT_NAME)
-	# @terraform destroy
+	go clean $(MAIN_PATH)
+	rm -f $(BINARY_PATH)/*
 
-deploy: dep test
-	cd terraform && terraform init
-	cd terraform && terraform plan
-	cd terraform && terraform apply
-
-plan:
-	cd terraform && terraform plan
-
-apply:
-	cd terraform && terraform apply
+dep: ## Get the dependencies
+	go mod download
 
 help: ## Display this help screen
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
