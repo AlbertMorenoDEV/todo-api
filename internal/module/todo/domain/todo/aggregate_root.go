@@ -17,15 +17,24 @@ type Todo struct {
 
 type Todos map[string]Todo
 
-func NewTodo(ID identifier.Identifier, title title.Title, due due.Due) (*Todo, error) {
+func NewTodo(id identifier.Identifier, tit title.Title, due due.Due) (*Todo, error) {
 	if due.IsPast() {
 		return nil, fmt.Errorf("Wrong due value: %s, can not be in the past", due.String())
 	}
 
 	return &Todo{
-		id:        ID,
-		title:     title,
+		id:        id,
+		title:     tit,
 		completed: completed.False(),
+		due:       due,
+	}, nil
+}
+
+func LoadTodo(id identifier.Identifier, tit title.Title, due due.Due, com completed.Completed) (*Todo, error) {
+	return &Todo{
+		id:        id,
+		title:     tit,
+		completed: com,
 		due:       due,
 	}, nil
 }

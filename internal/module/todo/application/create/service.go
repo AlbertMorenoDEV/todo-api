@@ -9,7 +9,7 @@ import (
 
 // Service that allow creating todos
 type Service interface {
-	CreateTodo(ID identifier.Identifier, title title.Title, due due.Due) error
+	CreateTodo(id identifier.Identifier, title title.Title, due due.Due) error
 }
 
 type service struct {
@@ -22,8 +22,8 @@ func NewService(repository todo.Repository) Service {
 }
 
 // CreateTodo creates a new item on the repository
-func (s *service) CreateTodo(ID identifier.Identifier, title title.Title, due due.Due) error {
-	newTodo, err := todo.NewTodo(ID, title, due)
+func (s *service) CreateTodo(id identifier.Identifier, title title.Title, due due.Due) error {
+	newTodo, err := todo.NewTodo(id, title, due)
 	if err != nil {
 		return err
 	}
