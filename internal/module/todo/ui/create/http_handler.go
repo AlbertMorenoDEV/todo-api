@@ -1,55 +1,49 @@
 package create
 
-//func TodoCreate(w http.ResponseWriter, r *http.Request) {
-//	var todo Todo
-//	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-//	if err != nil {
-//		panic(err)
-//	}
-//	if err := r.Body.Close(); err != nil {
-//		panic(err)
-//	}
-//	if err := json.Unmarshal(body, &todo); err != nil {
-//		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-//		w.WriteHeader(422) // unprocessable entity
-//		if err := json.NewEncoder(w).Encode(err); err != nil {
-//			panic(err)
-//		}
-//	}
-//
-//	t := RepoCreateTodo(todo)
-//	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-//	w.WriteHeader(http.StatusCreated)
-//	if err := json.NewEncoder(w).Encode(t); err != nil {
-//		panic(err)
-//	}
-//}
-//
-//type addGopherRequest struct {
-//	ID    string `json:"ID"`
-//	Name  string `json:"name"`
-//	Image string `json:"image"`
-//	Age   int    `json:"age"`
-//}
-//
-//// AddGopher save a gopher
-//func (s *server) AddGopher(w http.ResponseWriter, r *http.Request) {
-//	decoder := json.NewDecoder(r.Body)
-//
-//	var g addGopherRequest
-//	err := decoder.Decode(&g)
-//
-//	w.Header().Set("Content-Type", "application/json")
-//	if err != nil {
-//		w.WriteHeader(http.StatusInternalServerError)
-//		_ = json.NewEncoder(w).Encode("Error unmarshalling request body")
-//		return
-//	}
-//	if err := s.adding.AddGopher(r.Context(), g.ID, g.Name, g.Image, g.Age); err != nil {
-//		w.WriteHeader(http.StatusInternalServerError)
-//		_ = json.NewEncoder(w).Encode("Can't create a gopher")
-//		return
-//	}
-//
-//	w.WriteHeader(http.StatusCreated)
-//}
+import (
+	"encoding/json"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/create"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
+	"net/http"
+	"time"
+)
+
+type Handler struct {
+	commandBus command.Bus
+}
+
+func NewHandler(commandBus command.Bus) Handler {
+	return Handler{commandBus: commandBus}
+}
+
+type request struct {
+	ID    string    `json:"id"`
+	Title string    `json:"title"`
+	Due   time.Time `json:"due"`
+}
+
+func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var req request
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode("Error unmarshalling request body")
+		return
+	}
+
+	cmd := create.Command{
+		ID:    req.ID,
+		Title: req.Title,
+		Due:   req.Due,
+	}
+
+	if err := h.commandBus.Dispatch(cmd); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		_ = json.NewEncoder(w).Encode("Can't create a todo")
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+}

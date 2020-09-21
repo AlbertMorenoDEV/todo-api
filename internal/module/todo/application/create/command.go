@@ -7,3 +7,7 @@ type Command struct {
 	Title string    `json:"title"`
 	Due   time.Time `json:"due"`
 }
+
+func (c Command) CommandID() string {
+	return "create_todo"
+}

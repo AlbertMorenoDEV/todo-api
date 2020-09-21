@@ -9,18 +9,18 @@ type Route interface {
 	Path() string
 	Method() string
 	Name() string
-	HandlerFunc() http.Handler
+	HandlerFunc() http.HandlerFunc
 }
 
 type route struct {
 	path        string
 	method      string
 	name        string
-	handlerFunc http.Handler
+	handlerFunc http.HandlerFunc
 }
 
 // New creates a route
-func New(path string, method string, name string, handlerFunc http.Handler) Route {
+func New(path string, method string, name string, handlerFunc http.HandlerFunc) Route {
 	return &route{
 		path:        path,
 		method:      method,
@@ -41,6 +41,6 @@ func (r *route) Name() string {
 	return r.name
 }
 
-func (r *route) HandlerFunc() http.Handler {
+func (r *route) HandlerFunc() http.HandlerFunc {
 	return r.handlerFunc
 }
