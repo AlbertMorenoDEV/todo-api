@@ -1,6 +1,6 @@
 # todo-api
 
-It's a simple playground project to try out DDD and Hexagonal approaches using Golang.
+Simple playground project to try out DDD and Hexagonal approaches using Golang.
 
 ## How To
 
