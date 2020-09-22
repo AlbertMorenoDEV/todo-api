@@ -6,10 +6,13 @@ import (
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/infrastructure/route"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/infrastructure/server"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/create"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/find"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/infrastructure/persistence/inmemory"
 	uiCreate "github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/ui/create"
+	uiFind "github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/ui/find"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
 	"log"
 	"net/http"
 	"os"
@@ -30,16 +33,23 @@ func main() {
 
 	todoRep := inmemory.NewRepository(todo.Todos{})
 	todoCreator := create.NewService(todoRep)
+	todoFinder := find.NewService(todoRep)
 
 	cb := command.NewBus()
-	err := cb.RegisterHandler(create.Command{}, create.NewCommandHandler(todoCreator))
-	if err != nil {
+	if err := cb.RegisterHandler(create.Command{}, create.NewCommandHandler(todoCreator)); err != nil {
+		log.Fatal(err)
+	}
+
+	qb := query.NewBus()
+	if err := qb.RegisterHandler(find.Query{}, find.NewQueryHandler(todoFinder)); err != nil {
 		log.Fatal(err)
 	}
 
 	s := server.New()
-	err = s.AddRoute(route.New("/todos", "POST", "TodoCreate", uiCreate.NewHandler(cb).Handler))
-	if err != nil {
+	if err := s.AddRoute(route.New("/todos", "POST", "TodoCreate", uiCreate.NewHandler(cb).Handler)); err != nil {
+		log.Fatal(err)
+	}
+	if err := s.AddRoute(route.New("/todos/{todoId}", "GET", "TodoFind", uiFind.NewHandler(qb).Handler)); err != nil {
 		log.Fatal(err)
 	}
 

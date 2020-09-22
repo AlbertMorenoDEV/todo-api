@@ -8,12 +8,12 @@ type QueryHandler struct {
 	service Service
 }
 
-func NewQueryHandler(service Service) *QueryHandler {
-	return &QueryHandler{service}
+func NewQueryHandler(s Service) *QueryHandler {
+	return &QueryHandler{s}
 }
 
-func (h *QueryHandler) Handle(query Query) (*Response, error) {
-	id, err := identifier.New(query.ID)
+func (h *QueryHandler) Handle(q Query) (*Response, error) {
+	id, err := identifier.New(q.ID)
 	if err != nil {
 		return nil, err
 	}

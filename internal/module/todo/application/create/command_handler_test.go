@@ -89,7 +89,7 @@ func todoShouldExist(t *testing.T, repository todo.Repository, idRaw string, tit
 	found, err := repository.Find(id)
 	assert.NoError(t, err)
 
-	assert.True(t, found.ID().EqualsTo(id), "Wrong ID")
+	assert.True(t, found.ID().EqualsTo(id), "Wrong ResponseID")
 	assert.True(t, found.Title().EqualsTo(tit), "Wrong title")
 	assert.True(t, found.Due().EqualsTo(du), "Wrong due time")
 	assert.True(t, found.Completed().EqualsTo(co), "Wrong completed value")

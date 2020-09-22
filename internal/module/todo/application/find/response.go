@@ -20,3 +20,7 @@ func NewResponse(todo todo.Todo) *Response {
 		due:       todo.Due().Time(),
 	}
 }
+
+func (r Response) ResponseID() string {
+	return "find_todo"
+}
