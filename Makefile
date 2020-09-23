@@ -1,9 +1,10 @@
 # Go parameters
-MAIN_PATH=cmd/api/main.go
+MAIN_PATH=cmd/todoapi/main.go
 BINARY_NAME=$(BINARY_PATH)/server
 BINARY_PATH=bin
 
 run: ## Build and run the application
+	[ -f ./.env ] || cp .env.tpl .env
 	go build -o $(BINARY_NAME) -race $(MAIN_PATH)
 	./$(BINARY_NAME)
 

@@ -6,11 +6,11 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 
 ### Create a ToDo
 
-`curl -H "Content-Type: application/json" -d '{"name":"New Todo"}' http://localhost:8080/todos | jq`
+`curl -H "Content-Type: application/json" -d '{"name":"New Todo"}' http://localhost:3000/todos | jq`
 
 ### List ToDos
 
-`curl localhost:8080/todos | jq`
+`curl localhost:3000/todos | jq`
 
 ## Requirements
 - Create a new todo

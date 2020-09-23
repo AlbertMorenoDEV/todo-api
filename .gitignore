@@ -3,3 +3,7 @@
 *.tfstate.*
 
 .idea
+
+.env.tpl
+
+bin

@@ -1,0 +1,7 @@
+# https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[Makefile]
+indent_style = tab
