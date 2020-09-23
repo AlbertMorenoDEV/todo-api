@@ -2,9 +2,6 @@
 MAIN_PATH=cmd/todoapi/main.go
 BINARY_NAME=$(BINARY_PATH)/server
 BINARY_PATH=bin
-PROJECT_NAME := "todoapi"
-PKG := "github.com/AlbertMorenoDEV/$(PROJECT_NAME)"
-PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 
 run: ## Build and run the application
 	[ -f ./.env ] || cp .env.tpl .env
@@ -22,10 +19,10 @@ dep: ## Get the dependencies
 	go mod download
 
 lint: ## Lint Golang files
-	@golint -set_exit_status ${PKG_LIST}
+	@golint ./...
 
 test-coverage: ## Run tests with coverage
-	@go test -short -coverprofile cover.out -covermode=atomic ${PKG_LIST}
+	@go test -short -coverprofile cover.out -covermode=atomic ./...
 	@cat cover.out >> coverage.txt
 
 build: dep ## Build the binary file
