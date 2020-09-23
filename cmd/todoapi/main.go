@@ -17,6 +17,8 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
@@ -46,10 +48,12 @@ func main() {
 	}
 
 	s := server.New()
-	if err := s.AddRoute(route.New("/todos", "POST", "TodoCreate", uiCreate.NewHandler(cb).Handler)); err != nil {
+	createTodoHandler := uiCreate.NewHandler(cb)
+	if err := s.AddRoute(route.New("/todos", "POST", "TodoCreate", createTodoHandler.Handler)); err != nil {
 		log.Fatal(err)
 	}
-	if err := s.AddRoute(route.New("/todos/{todoId}", "GET", "TodoFind", uiFind.NewHandler(qb).Handler)); err != nil {
+	findTodoHandler := uiFind.NewHandler(qb)
+	if err := s.AddRoute(route.New("/todos/{todoId}", "GET", "TodoFind", findTodoHandler.Handler)); err != nil {
 		log.Fatal(err)
 	}
 
