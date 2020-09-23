@@ -6,16 +6,19 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 
 ### Create a ToDo
 
-`curl -H "Content-Type: application/json" -d '{"name":"New Todo"}' http://localhost:3000/todos | jq`
+`curl --location --request POST 'http://localhost:3000/todos' --header 'Content-Type: application/json' --data-raw '{"id":"1", "title":"New Todo", "due":1609459200}' | jq`
 
 ### List ToDos
 
 `curl localhost:3000/todos | jq`
 
 ## Requirements
-- Create a new todo
-- Edit an existing todo
-- Delete an existing todo
+- [x] Create a new todo
+- [x] Edit an existing todo
+- [ ] Delete an existing todo
+- [ ] Github test pipeline
+- [ ] AWS ECS deployment
+- [ ] Logging improvement
 
 ## Resources
 - API Example: https://thenewstack.io/make-a-restful-json-api-go/ > https://github.com/corylanou/tns-restful-json-api

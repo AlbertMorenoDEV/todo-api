@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/create"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
+	"log"
 	"net/http"
-	"time"
 )
 
 type Handler struct {
@@ -17,9 +17,9 @@ func NewHandler(commandBus command.Bus) Handler {
 }
 
 type Request struct {
-	ID    string    `json:"id"`
-	Title string    `json:"title"`
-	Due   time.Time `json:"due"`
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Due   int64  `json:"due"`
 }
 
 func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
@@ -30,6 +30,7 @@ func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		_ = json.NewEncoder(w).Encode("Error unmarshalling request body")
+		log.Print(err)
 		return
 	}
 
@@ -42,6 +43,7 @@ func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
 	if err := h.commandBus.Dispatch(cmd); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		_ = json.NewEncoder(w).Encode("Can't create a todo")
+		log.Print(err)
 		return
 	}
 

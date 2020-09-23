@@ -19,7 +19,7 @@ type Todos map[string]Todo
 
 func NewTodo(id identifier.Identifier, tit title.Title, due due.Due) (*Todo, error) {
 	if due.IsPast() {
-		return nil, fmt.Errorf("Wrong due value: %s, can not be in the past", due.String())
+		return nil, fmt.Errorf("Wrong due value: %s, can not be in the past", due.Time().Unix())
 	}
 
 	return &Todo{

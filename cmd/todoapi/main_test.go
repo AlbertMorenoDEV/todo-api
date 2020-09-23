@@ -36,8 +36,10 @@ func TestCreateAndGetTodo(t *testing.T) {
 	req := create.Request{
 		ID:    uuid.NewV4().String(),
 		Title: fake.Title(),
-		Due:   time.Now().Add(7 * 24 * time.Hour),
+		Due:   time.Now().Add(7 * 24 * time.Hour).Unix(),
 	}
+
+	fmt.Print(req)
 
 	e.POST("/todos").WithJSON(req).
 		Expect().
@@ -49,7 +51,7 @@ func TestCreateAndGetTodo(t *testing.T) {
 			"id":        	{"type": "string"},
 			"title": 		{"type": "string"},
 			"completed":	{"type": "boolean"},
-			"due": 			{"type": "string"}
+			"due": 			{"type": "integer"}
 		},
 		"required": ["id", "title", "completed", "due"]
 	}`

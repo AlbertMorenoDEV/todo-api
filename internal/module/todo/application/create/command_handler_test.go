@@ -17,10 +17,10 @@ func TestCreateSuccess(t *testing.T) {
 	tests := []struct {
 		id        string
 		title     string
-		due       time.Time
+		due       int64
 		completed bool
 	}{
-		{"57b4e893-a946-4c65-baa9-e1653585f731", "In one hour", time.Now().Add(time.Hour), false},
+		{"57b4e893-a946-4c65-baa9-e1653585f731", "In one hour", time.Now().Add(time.Hour).Unix(), false},
 	}
 
 	for _, test := range tests {
@@ -47,10 +47,10 @@ func TestCreateFail(t *testing.T) {
 	tests := []struct {
 		id        string
 		title     string
-		due       time.Time
+		due       int64
 		completed bool
 	}{
-		{"1d6d66f3-1dff-4d29-8bff-34dad612b71b", "One hour ago", time.Now().Add(-1 * time.Hour), false},
+		{"1d6d66f3-1dff-4d29-8bff-34dad612b71b", "One hour ago", time.Now().Add(-1 * time.Hour).Unix(), false},
 	}
 
 	for _, test := range tests {
@@ -73,14 +73,14 @@ func TestCreateFail(t *testing.T) {
 	}
 }
 
-func todoShouldExist(t *testing.T, repository todo.Repository, idRaw string, titRaw string, duRaw time.Time, coRaw bool) {
+func todoShouldExist(t *testing.T, repository todo.Repository, idRaw string, titRaw string, duRaw int64, coRaw bool) {
 	id, err := identifier.New(idRaw)
 	assert.NoError(t, err)
 
 	tit, err := title.New(titRaw)
 	assert.NoError(t, err)
 
-	du, err := due.New(duRaw)
+	du, err := due.FromMilliseconds(duRaw)
 	assert.NoError(t, err)
 
 	co, err := completed.New(coRaw)
@@ -91,7 +91,7 @@ func todoShouldExist(t *testing.T, repository todo.Repository, idRaw string, tit
 
 	assert.True(t, found.ID().EqualsTo(id), "Wrong ResponseID")
 	assert.True(t, found.Title().EqualsTo(tit), "Wrong title")
-	assert.True(t, found.Due().EqualsTo(du), "Wrong due time")
+	assert.True(t, found.Due().EqualsTo(*du), "Wrong due time")
 	assert.True(t, found.Completed().EqualsTo(co), "Wrong completed value")
 }
 

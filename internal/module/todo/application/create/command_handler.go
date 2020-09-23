@@ -27,15 +27,15 @@ func (h *CommandHandler) Handle(c command.Command) error {
 		return err
 	}
 
-	title, err := title.New(cmd.Title)
+	tit, err := title.New(cmd.Title)
 	if err != nil {
 		return err
 	}
 
-	due, err := due.New(cmd.Due)
+	d, err := due.FromMilliseconds(cmd.Due)
 	if err != nil {
 		return err
 	}
 
-	return h.service.CreateTodo(id, title, due)
+	return h.service.CreateTodo(id, tit, *d)
 }

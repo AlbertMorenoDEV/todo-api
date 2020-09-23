@@ -1,19 +1,21 @@
 package due
 
-import "time"
+import (
+	"time"
+)
 
 type Due struct {
 	value time.Time
 }
 
-func New(value time.Time) (Due, error) {
+func New(v time.Time) (*Due, error) {
 	var vo Due
-	vo.value = value
-	return vo, nil
+	vo.value = v
+	return &vo, nil
 }
 
-func (vo Due) String() string {
-	return vo.value.Format("yyyy-MM-dd HH:mm:ss")
+func FromMilliseconds(v int64) (*Due, error) {
+	return New(time.Unix(v, 0))
 }
 
 func (vo Due) Time() time.Time {
@@ -25,5 +27,5 @@ func (vo Due) IsPast() bool {
 }
 
 func (vo Due) EqualsTo(other Due) bool {
-	return vo.String() == other.String()
+	return vo.Time().Unix() == other.Time().Unix()
 }

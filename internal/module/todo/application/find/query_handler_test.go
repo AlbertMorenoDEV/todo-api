@@ -85,7 +85,7 @@ func todoFromRaw(t *testing.T, idRaw string, titRaw string, duRaw time.Time, coR
 	co, err := completed.New(coRaw)
 	assert.NoError(t, err)
 
-	tod, err := todo.LoadTodo(id, tit, du, co)
+	tod, err := todo.LoadTodo(id, tit, *du, co)
 	assert.NoError(t, err)
 
 	return *tod
