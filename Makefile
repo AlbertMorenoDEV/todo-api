@@ -2,6 +2,9 @@
 MAIN_PATH=cmd/todoapi/main.go
 BINARY_NAME=$(BINARY_PATH)/server
 BINARY_PATH=bin
+PROJECT_NAME := "todoapi"
+PKG := "github.com/AlbertMorenoDEV/$(PROJECT_NAME)"
+PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
 
 run: ## Build and run the application
 	[ -f ./.env ] || cp .env.tpl .env
@@ -17,6 +20,16 @@ clean: ## Remove previous build
 
 dep: ## Get the dependencies
 	go mod download
+
+lint: ## Lint Golang files
+	@golint -set_exit_status ${PKG_LIST}
+
+test-coverage: ## Run tests with coverage
+	@go test -short -coverprofile cover.out -covermode=atomic ${PKG_LIST}
+	@cat cover.out >> coverage.txt
+
+build: dep ## Build the binary file
+	@go build -o $(BINARY_NAME) -race $(MAIN_PATH)
 
 help: ## Display this help screen
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
