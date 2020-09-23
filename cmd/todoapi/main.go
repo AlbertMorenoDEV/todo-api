@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/infrastructure/route"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/infrastructure/server"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/create"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/find"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
@@ -13,6 +11,9 @@ import (
 	uiFind "github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/ui/find"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/server"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/server/route"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/ui/health"
 	"log"
 	"net/http"
 	"os"
@@ -33,6 +34,13 @@ func main() {
 
 	httpAddr := fmt.Sprintf("%s:%d", *host, *port)
 
+	r := createRouter()
+
+	fmt.Println("Running todoapi server on:", httpAddr)
+	log.Fatal(http.ListenAndServe(httpAddr, r))
+}
+
+func createRouter() http.Handler {
 	todoRep := inmemory.NewRepository(todo.Todos{})
 	todoCreator := create.NewService(todoRep)
 	todoFinder := find.NewService(todoRep)
@@ -48,15 +56,20 @@ func main() {
 	}
 
 	s := server.New()
+
+	if err := s.AddRoute(route.New("/", "GET", "HealthCheck", health.Handler)); err != nil {
+		log.Fatal(err)
+	}
+
 	createTodoHandler := uiCreate.NewHandler(cb)
 	if err := s.AddRoute(route.New("/todos", "POST", "TodoCreate", createTodoHandler.Handler)); err != nil {
 		log.Fatal(err)
 	}
+
 	findTodoHandler := uiFind.NewHandler(qb)
 	if err := s.AddRoute(route.New("/todos/{todoId}", "GET", "TodoFind", findTodoHandler.Handler)); err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Running todoapi server on:", httpAddr)
-	log.Fatal(http.ListenAndServe(httpAddr, s.Router()))
+	return s.Router()
 }

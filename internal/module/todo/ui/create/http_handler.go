@@ -16,7 +16,7 @@ func NewHandler(commandBus command.Bus) Handler {
 	return Handler{commandBus: commandBus}
 }
 
-type request struct {
+type Request struct {
 	ID    string    `json:"id"`
 	Title string    `json:"title"`
 	Due   time.Time `json:"due"`
@@ -25,7 +25,7 @@ type request struct {
 func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var req request
+	var req Request
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

@@ -25,5 +25,5 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 - CQRS Example: https://github.com/jetbasrawi/go.cqrs/tree/master/examples/simplecqrs
 - VO Example: https://github.com/codeinabox/go-go-valueobject
 - Tests on Docker: https://www.ardanlabs.com/blog/2019/03/integration-testing-in-go-executing-tests-with-docker.html
-- E2E test framework: https://github.com/h2non/baloo
+- E2E test framework: https://github.com/gavv/httpexpect
 - Testing package: https://github.com/stretchr/testify
