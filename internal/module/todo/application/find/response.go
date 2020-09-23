@@ -3,14 +3,13 @@ package find
 import (
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
-	"time"
 )
 
 type Response struct {
-	ID        string    `json:"id"`
-	Title     string    `json:"title"`
-	Completed bool      `json:"completed"`
-	Due       time.Time `json:"due"`
+	ID        string `json:"id"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
+	Due       int64  `json:"due"`
 }
 
 func NewResponse(todo todo.Todo) query.Response {
@@ -18,7 +17,7 @@ func NewResponse(todo todo.Todo) query.Response {
 		ID:        todo.ID().String(),
 		Title:     todo.Title().String(),
 		Completed: todo.Completed().Bool(),
-		Due:       todo.Due().Time(),
+		Due:       todo.Due().Time().Unix(),
 	}
 }
 
