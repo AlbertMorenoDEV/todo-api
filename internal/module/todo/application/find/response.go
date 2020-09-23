@@ -2,22 +2,23 @@ package find
 
 import (
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
 	"time"
 )
 
 type Response struct {
-	id        string    `json:"id"`
-	title     string    `json:"title"`
-	completed bool      `json:"completed"`
-	due       time.Time `json:"due"`
+	ID        string    `json:"id"`
+	Title     string    `json:"title"`
+	Completed bool      `json:"completed"`
+	Due       time.Time `json:"due"`
 }
 
-func NewResponse(todo todo.Todo) *Response {
-	return &Response{
-		id:        todo.ID().String(),
-		title:     todo.Title().String(),
-		completed: todo.Completed().Bool(),
-		due:       todo.Due().Time(),
+func NewResponse(todo todo.Todo) query.Response {
+	return Response{
+		ID:        todo.ID().String(),
+		Title:     todo.Title().String(),
+		Completed: todo.Completed().Bool(),
+		Due:       todo.Due().Time(),
 	}
 }
 

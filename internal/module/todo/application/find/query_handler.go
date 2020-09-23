@@ -1,7 +1,9 @@
 package find
 
 import (
+	"errors"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/identifier"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
 )
 
 type QueryHandler struct {
@@ -12,8 +14,13 @@ func NewQueryHandler(s Service) *QueryHandler {
 	return &QueryHandler{s}
 }
 
-func (h *QueryHandler) Handle(q Query) (*Response, error) {
-	id, err := identifier.New(q.ID)
+func (h *QueryHandler) Handle(q query.Query) (*query.Response, error) {
+	qr, ok := q.(Query)
+	if !ok {
+		return nil, errors.New("invalid query")
+	}
+
+	id, err := identifier.New(qr.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -23,5 +30,7 @@ func (h *QueryHandler) Handle(q Query) (*Response, error) {
 		return nil, err
 	}
 
-	return NewResponse(*todo), nil
+	r := NewResponse(*todo)
+
+	return &r, nil
 }

@@ -41,7 +41,7 @@ func TestFindSuccess(t *testing.T) {
 
 			res, err := handler.Handle(query)
 			assert.NoError(t, err)
-			assert.Equal(t, expected, res)
+			assert.Equal(t, expected, *res)
 		})
 	}
 }

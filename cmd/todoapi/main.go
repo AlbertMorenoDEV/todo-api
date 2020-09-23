@@ -53,6 +53,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("The gopher server is on tap now:", httpAddr)
+	fmt.Println("Running todoapi server on:", httpAddr)
 	log.Fatal(http.ListenAndServe(httpAddr, s.Router()))
 }
