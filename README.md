@@ -1,5 +1,8 @@
 # todo-api
 
+[![codecov](https://codecov.io/gh/AlbertMorenoDEV/todo-api/branch/master/graph/badge.svg)](https://codecov.io/gh/AlbertMorenoDEV/todo-api)
+[![build](https://github.com/AlbertMorenoDEV/todo-api/workflows/Build%20and%20Test/badge.svg)](https://github.com/AlbertMorenoDEV/todo-api/actions?query=workflow%3A%22Build+and+Test%22)
+
 Simple playground project to try out DDD and Hexagonal approaches using Golang.
 
 ## How To
