@@ -9,10 +9,10 @@ import (
 )
 
 type Todo struct {
-	id        identifier.Identifier `json:"id"`
-	title     title.Title           `json:"title"`
-	completed completed.Completed   `json:"completed"`
-	due       due.Due               `json:"due"`
+	id        identifier.Identifier
+	title     title.Title
+	completed completed.Completed
+	due       due.Due
 }
 
 type Todos map[string]Todo
