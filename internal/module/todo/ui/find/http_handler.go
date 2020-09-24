@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/find"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/jsonapi"
 	"github.com/gorilla/mux"
 	"net/http"
 )
@@ -26,13 +27,15 @@ func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
 	resp, err := h.queryBus.Ask(qr)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode("Can't find the todo")
+		resp := append(jsonapi.Errors{}, jsonapi.Error{Status: http.StatusInternalServerError, Title: "Can't find the todo"})
+		_ = json.NewEncoder(w).Encode(resp)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(resp); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode("Internal Server Error")
+		resp := append(jsonapi.Errors{}, jsonapi.Error{Status: http.StatusInternalServerError, Title: "Internal Server Error"})
+		_ = json.NewEncoder(w).Encode(resp)
 	}
 }

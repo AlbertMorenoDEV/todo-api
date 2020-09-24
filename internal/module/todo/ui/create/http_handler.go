@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/create"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/jsonapi"
 	"log"
 	"net/http"
 )
@@ -29,20 +30,18 @@ func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode("Error unmarshalling request body")
+		resp := append(jsonapi.Errors{}, jsonapi.Error{Status: http.StatusInternalServerError, Title: "Error unmarshalling request body"})
+		_ = json.NewEncoder(w).Encode(resp)
 		log.Print(err)
 		return
 	}
 
-	cmd := create.Command{
-		ID:    req.ID,
-		Title: req.Title,
-		Due:   req.Due,
-	}
+	cmd := create.Command{ID: req.ID, Title: req.Title, Due: req.Due}
 
 	if err := h.commandBus.Dispatch(cmd); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode("Can't create a todo")
+		resp := append(jsonapi.Errors{}, jsonapi.Error{Status: http.StatusInternalServerError, Title: "Can't create a todo"})
+		_ = json.NewEncoder(w).Encode(resp)
 		log.Print(err)
 		return
 	}

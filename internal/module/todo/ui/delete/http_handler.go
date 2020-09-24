@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/delete"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/jsonapi"
 	"github.com/gorilla/mux"
 	"net/http"
 )
@@ -25,7 +26,8 @@ func (h *Handler) Handler(w http.ResponseWriter, r *http.Request) {
 
 	if err := h.commandBus.Dispatch(com); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode("Can't delete the todo")
+		resp := append(jsonapi.Errors{}, jsonapi.Error{Status: http.StatusInternalServerError, Title: "Can't delete the todo"})
+		_ = json.NewEncoder(w).Encode(resp)
 		return
 	}
 
