@@ -10,4 +10,4 @@ RUN go mod download
 
 RUN go get github.com/githubnemo/CompileDaemon
 
-ENTRYPOINT CompileDaemon --build="go build -o server cmd/server/main.go" --command=./server
+ENTRYPOINT CompileDaemon --build="go build -o todoapi cmd/todoapi/main.go" --command=./todoapi

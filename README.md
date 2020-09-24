@@ -23,6 +23,8 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 - [ ] AWS ECS deployment
 - [ ] Logging improvement
 - [ ] Auth system
+- [ ] Redis storage
+- [ ] Build ECR image and push from GitHub pipeline
 
 ## Resources
 - API Example: https://thenewstack.io/make-a-restful-json-api-go/ > https://github.com/corylanou/tns-restful-json-api
@@ -34,3 +36,10 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 - Tests on Docker: https://www.ardanlabs.com/blog/2019/03/integration-testing-in-go-executing-tests-with-docker.html
 - E2E test framework: https://github.com/gavv/httpexpect
 - Testing package: https://github.com/stretchr/testify
+- Multiple AWS accounts: https://medium.com/@shakib37/manage-aws-cli-for-multiple-accounts-e2c414006191
+- ECS setup from TF: https://medium.com/avmconsulting-blog/how-to-deploy-a-dockerised-node-js-application-on-aws-ecs-with-terraform-3e6bceb48785
+
+## Notes
+
+Execute AWS CLI for a profile: `AWS_PROFILE=personal aws s3 ls`
+TF apply: `AWS_PROFILE=personal terraform apply`

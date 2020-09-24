@@ -26,8 +26,8 @@ import (
 
 func main() {
 	var (
-		defaultHost    = os.Getenv("TODOAPI_SERVER_HOST")
-		defaultPort, _ = strconv.Atoi(os.Getenv("TODOAPI_SERVER_PORT"))
+		defaultHost    = os.Getenv("TODOAPI_HOST")
+		defaultPort, _ = strconv.Atoi(os.Getenv("TODOAPI_PORT"))
 	)
 
 	host := flag.String("host", defaultHost, "define host of the server")
