@@ -23,6 +23,6 @@ WORKDIR /root/
 
 COPY --from=builder /app/cmd/todoapi/todoapi .
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD ["./todoapi"]
