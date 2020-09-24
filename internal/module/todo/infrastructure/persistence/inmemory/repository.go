@@ -37,5 +37,18 @@ func (r *Repository) Find(i identifier.Identifier) (*todo.Todo, error) {
 		}
 	}
 
-	return nil, fmt.Errorf("todo item with ResponseID %s could not be found", i.String())
+	return nil, fmt.Errorf("todo item with ID %s could not be found", i.String())
+}
+
+func (r *Repository) Delete(i identifier.Identifier) error {
+	r.mtx.Lock()
+	defer r.mtx.Unlock()
+
+	_, ok := r.todos[i.String()]
+	if ok {
+		delete(r.todos, i.String())
+		return nil
+	}
+
+	return fmt.Errorf("todo item with ID %s could not be found", i.String())
 }

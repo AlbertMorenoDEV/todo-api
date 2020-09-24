@@ -30,12 +30,32 @@ func NewTodo(id identifier.Identifier, tit title.Title, due due.Due) (*Todo, err
 	}, nil
 }
 
-func LoadTodo(id identifier.Identifier, tit title.Title, due due.Due, com completed.Completed) (*Todo, error) {
+func LoadTodo(idRaw string, titRaw string, dueRaw int64, comRaw bool) (*Todo, error) {
+	id, err := identifier.New(idRaw)
+	if err != nil {
+		return nil, err
+	}
+
+	tit, err := title.New(titRaw)
+	if err != nil {
+		return nil, err
+	}
+
+	d, err := due.FromMilliseconds(dueRaw)
+	if err != nil {
+		return nil, err
+	}
+
+	com, err := completed.New(comRaw)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Todo{
 		id:        id,
 		title:     tit,
 		completed: com,
-		due:       due,
+		due:       *d,
 	}, nil
 }
 

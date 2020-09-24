@@ -2,10 +2,6 @@ package find_test
 
 import (
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/find"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/completed"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/due"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/identifier"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/title"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/infrastructure/persistence/inmemory"
 	"github.com/stretchr/testify/assert"
@@ -17,13 +13,13 @@ func TestFindSuccess(t *testing.T) {
 	tests := []struct {
 		id        string
 		title     string
-		due       time.Time
+		due       int64
 		completed bool
 	}{
 		{
 			"57b4e893-a946-4c65-baa9-e1653585f731",
 			"In one hour",
-			time.Now().Add(time.Hour),
+			time.Now().Add(time.Hour).Unix(),
 			false,
 		},
 	}
@@ -72,20 +68,8 @@ func TestFindFail(t *testing.T) {
 	}
 }
 
-func todoFromRaw(t *testing.T, idRaw string, titRaw string, duRaw time.Time, coRaw bool) todo.Todo {
-	id, err := identifier.New(idRaw)
-	assert.NoError(t, err)
-
-	tit, err := title.New(titRaw)
-	assert.NoError(t, err)
-
-	du, err := due.New(duRaw)
-	assert.NoError(t, err)
-
-	co, err := completed.New(coRaw)
-	assert.NoError(t, err)
-
-	tod, err := todo.LoadTodo(id, tit, *du, co)
+func todoFromRaw(t *testing.T, idRaw string, titRaw string, duRaw int64, coRaw bool) todo.Todo {
+	tod, err := todo.LoadTodo(idRaw, titRaw, duRaw, coRaw)
 	assert.NoError(t, err)
 
 	return *tod

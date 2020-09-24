@@ -18,10 +18,11 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 ## Requirements
 - [x] Create a new todo
 - [x] Edit an existing todo
-- [ ] Delete an existing todo
-- [ ] Github test pipeline
+- [x] Delete an existing todo
+- [x] Github test pipeline
 - [ ] AWS ECS deployment
 - [ ] Logging improvement
+- [ ] Auth system
 
 ## Resources
 - API Example: https://thenewstack.io/make-a-restful-json-api-go/ > https://github.com/corylanou/tns-restful-json-api

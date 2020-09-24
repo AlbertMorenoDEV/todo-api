@@ -5,4 +5,5 @@ import "github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain
 type Repository interface {
 	Save(t *Todo) error
 	Find(i identifier.Identifier) (*Todo, error)
+	Delete(i identifier.Identifier) error
 }

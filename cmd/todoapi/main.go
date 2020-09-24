@@ -4,10 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/create"
+	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/delete"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/find"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/infrastructure/persistence/inmemory"
 	uiCreate "github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/ui/create"
+	uiDelete "github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/ui/delete"
 	uiFind "github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/ui/find"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
 	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
@@ -34,19 +36,25 @@ func main() {
 
 	httpAddr := fmt.Sprintf("%s:%d", *host, *port)
 
-	r := createRouter()
+	todoRep := inmemory.NewRepository(todo.Todos{})
+	r := createRouter(todoRep)
 
 	fmt.Println("Running todoapi server on:", httpAddr)
 	log.Fatal(http.ListenAndServe(httpAddr, r))
 }
 
-func createRouter() http.Handler {
-	todoRep := inmemory.NewRepository(todo.Todos{})
+func createRouter(todoRep todo.Repository) http.Handler {
 	todoCreator := create.NewService(todoRep)
 	todoFinder := find.NewService(todoRep)
+	todoDeleter := delete.NewService(todoRep)
 
 	cb := command.NewBus()
+
 	if err := cb.RegisterHandler(create.Command{}, create.NewCommandHandler(todoCreator)); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := cb.RegisterHandler(delete.Command{}, delete.NewCommandHandler(todoDeleter)); err != nil {
 		log.Fatal(err)
 	}
 
@@ -68,6 +76,11 @@ func createRouter() http.Handler {
 
 	findTodoHandler := uiFind.NewHandler(qb)
 	if err := s.AddRoute(route.New("/todos/{todoId}", "GET", "TodoFind", findTodoHandler.Handler)); err != nil {
+		log.Fatal(err)
+	}
+
+	deleteTodoHandler := uiDelete.NewHandler(cb)
+	if err := s.AddRoute(route.New("/todos/{todoId}", "DELETE", "TodoDelete", deleteTodoHandler.Handler)); err != nil {
 		log.Fatal(err)
 	}
 
