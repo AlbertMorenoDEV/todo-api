@@ -21,7 +21,7 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 - [x] Delete an existing todo
 - [x] Github test pipeline
 - [ ] AWS ECS deployment
-- [ ] Logging improvement
+- [ ] Logging improvement: JSON, access log to stdout and not stderr
 - [ ] Auth system
 - [ ] Redis storage
 - [ ] Build ECR image and push from GitHub pipeline
@@ -38,8 +38,16 @@ Simple playground project to try out DDD and Hexagonal approaches using Golang.
 - Testing package: https://github.com/stretchr/testify
 - Multiple AWS accounts: https://medium.com/@shakib37/manage-aws-cli-for-multiple-accounts-e2c414006191
 - ECS setup from TF: https://medium.com/avmconsulting-blog/how-to-deploy-a-dockerised-node-js-application-on-aws-ecs-with-terraform-3e6bceb48785
+- VPC setup from TF: https://nickcharlton.net/posts/terraform-aws-vpc.html
 
 ## Notes
 
 Execute AWS CLI for a profile: `AWS_PROFILE=personal aws s3 ls`
 TF apply: `AWS_PROFILE=personal terraform apply`
+Push new image: `AWS_ACCOUNT_ID=340053764926 make push-docker-image`
+
+Upload new image to ECR:
+`AWS_PROFILE=personal aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 340053764926.dkr.ecr.eu-west-1.amazonaws.com`
+`docker build -t todo-api -f etc/pro/docker/server/Dockerfile .`
+`docker tag todo-api_app:latest 340053764926.dkr.ecr.eu-west-1.amazonaws.com/todo-api:latest`
+`docker push 340053764926.dkr.ecr.eu-west-1.amazonaws.com/todo-api:latest`
