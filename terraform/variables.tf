@@ -1,29 +1,24 @@
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-variable "aws_key_path" {}
-variable "aws_key_name" {}
-
 variable "aws_region" {
   description = "Region for the VPC"
   default = "eu-west-1"
 }
 
-variable "vpc_cidr" {
-  description = "CIDR for the whole VPC"
-  default = "10.0.0.0/16"
+variable "vpc_id" {
+  description = "ID of the VPC"
+  default = ""
 }
 
-variable "public_subnet_cidr" {
-  description = "CIDR for the Public Subnet"
-  default = "10.0.0.0/24"
+variable "subnet_1_id" {
+  description = "ID of the subnet 1"
+  default = ""
 }
 
-variable "private_subnet_cidr_1" {
-  description = "CIDR for the Private Subnet"
-  default = "10.0.1.0/24"
+variable "subnet_2_id" {
+  description = "ID of the subnet 2"
+  default = ""
 }
 
-variable "private_subnet_cidr_2" {
-  description = "CIDR for the Private Subnet"
-  default = "10.0.2.0/24"
+variable "subnet_3_id" {
+  description = "ID of the subnet 3"
+  default = ""
 }

@@ -60,8 +60,31 @@ resource "aws_ecs_service" "todoapi" {
   launch_type     = "FARGATE"
   desired_count   = 3
 
+  load_balancer {
+    target_group_arn = aws_lb_target_group.target_group.arn
+    container_name   = aws_ecs_task_definition.todoapi_app.family
+    container_port   = 3000
+  }
+
   network_configuration {
-    subnets          = [aws_subnet.eu-west-1a-private.id, aws_subnet.eu-west-1b-private.id]
+    subnets          = [var.subnet_1_id, var.subnet_2_id, var.subnet_3_id]
     assign_public_ip = true
+  }
+}
+
+resource "aws_security_group" "service_security_group" {
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    # Only allowing traffic in from the load balancer security group
+    security_groups = [aws_security_group.load_balancer_security_group.id]
+  }
+
+  egress {
+    from_port   = 0 # Allowing any incoming port
+    to_port     = 0 # Allowing any outgoing port
+    protocol    = "-1" # Allowing any outgoing protocol
+    cidr_blocks = ["0.0.0.0/0"] # Allowing traffic out to all IP addresses
   }
 }
