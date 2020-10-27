@@ -1,17 +1,15 @@
 package identifier
 
-type Identifier struct {
-	value string
-}
+type Identifier string
 
 func New(value string) (Identifier, error) {
 	var vo Identifier
-	vo.value = value
+	vo = Identifier(value)
 	return vo, nil
 }
 
 func (vo Identifier) String() string {
-	return vo.value
+	return string(vo)
 }
 
 func (vo Identifier) EqualsTo(other Identifier) bool {
