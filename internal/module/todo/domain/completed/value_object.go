@@ -1,13 +1,9 @@
 package completed
 
-type Completed struct {
-	value bool
-}
+type Completed bool
 
 func New(value bool) (Completed, error) {
-	var vo Completed
-	vo.value = value
-	return vo, nil
+	return Completed(value), nil
 }
 
 func True() Completed {
@@ -21,14 +17,14 @@ func False() Completed {
 }
 
 func (vo Completed) String() string {
-	if vo.value {
+	if vo {
 		return "true"
 	}
 	return "false"
 }
 
 func (vo Completed) Bool() bool {
-	return vo.value
+	return bool(vo)
 }
 
 func (vo Completed) EqualsTo(other Completed) bool {

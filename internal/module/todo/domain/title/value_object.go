@@ -1,17 +1,13 @@
 package title
 
-type Title struct {
-	value string
-}
+type Title string
 
 func New(value string) (Title, error) {
-	var vo Title
-	vo.value = value
-	return vo, nil
+	return Title(value), nil
 }
 
 func (vo Title) String() string {
-	return vo.value
+	return string(vo)
 }
 
 func (vo Title) EqualsTo(other Title) bool {

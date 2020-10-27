@@ -3,9 +3,7 @@ package identifier
 type Identifier string
 
 func New(value string) (Identifier, error) {
-	var vo Identifier
-	vo = Identifier(value)
-	return vo, nil
+	return Identifier(value), nil
 }
 
 func (vo Identifier) String() string {
