@@ -1,13 +1,13 @@
 package create_test
 
 import (
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/create"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/completed"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/due"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/identifier"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/title"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/infrastructure/persistence/inmemory"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/application/create"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/completed"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/due"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/identifier"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/title"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/todo"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/infrastructure/persistence/inmemory"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

@@ -2,8 +2,8 @@ package find
 
 import (
 	"errors"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/identifier"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/identifier"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/bus/query"
 )
 
 type QueryHandler struct {

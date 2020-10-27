@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/infrastructure/persistence/inmemory"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/ui/create"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/todo"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/infrastructure/persistence/inmemory"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/ui/create"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/icrowley/fake"
 	uuid "github.com/satori/go.uuid"

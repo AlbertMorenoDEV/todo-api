@@ -1,8 +1,8 @@
 package find
 
 import (
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/todo"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/bus/query"
 )
 
 type Response struct {

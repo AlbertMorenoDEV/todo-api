@@ -2,9 +2,9 @@ package delete
 
 import (
 	"encoding/json"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/delete"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/jsonapi"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/application/delete"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/bus/command"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/http/jsonapi"
 	"github.com/gorilla/mux"
 	"net/http"
 )

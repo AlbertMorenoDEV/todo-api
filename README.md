@@ -48,6 +48,4 @@ Push new image: `AWS_ACCOUNT_ID=340053764926 make push-docker-image`
 
 Upload new image to ECR:
 `AWS_PROFILE=personal aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 340053764926.dkr.ecr.eu-west-1.amazonaws.com`
-`docker build -t todo-api -f etc/pro/docker/server/Dockerfile .`
-`docker tag todo-api_app:latest 340053764926.dkr.ecr.eu-west-1.amazonaws.com/todo-api:latest`
-`docker push 340053764926.dkr.ecr.eu-west-1.amazonaws.com/todo-api:latest`
+`AWS_ACCOUNT_ID=340053764926 make push-docker-image`

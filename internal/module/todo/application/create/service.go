@@ -1,10 +1,10 @@
 package create
 
 import (
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/due"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/identifier"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/title"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/due"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/identifier"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/title"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/todo"
 )
 
 // Service that allow creating todos

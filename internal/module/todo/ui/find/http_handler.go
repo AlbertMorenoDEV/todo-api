@@ -2,9 +2,9 @@ package find
 
 import (
 	"encoding/json"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/find"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/query"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/jsonapi"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/application/find"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/bus/query"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/http/jsonapi"
 	"github.com/gorilla/mux"
 	"net/http"
 )

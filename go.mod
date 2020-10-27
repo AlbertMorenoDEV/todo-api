@@ -1,4 +1,4 @@
-module github.com/AlbertMorenoDEV/go-ddd-playground
+module github.com/AlbertMorenoDEV/todo-api
 
 go 1.15
 

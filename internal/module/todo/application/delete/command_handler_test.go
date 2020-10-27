@@ -1,10 +1,10 @@
 package delete_test
 
 import (
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/delete"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/identifier"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/infrastructure/persistence/inmemory"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/application/delete"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/identifier"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/todo"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/infrastructure/persistence/inmemory"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

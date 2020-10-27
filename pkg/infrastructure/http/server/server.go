@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/logging"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/http/server/route"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/http/logging"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/http/server/route"
 	"github.com/gorilla/mux"
 	"net/http"
 )

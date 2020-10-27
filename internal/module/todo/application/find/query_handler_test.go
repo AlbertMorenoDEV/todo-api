@@ -1,9 +1,9 @@
 package find_test
 
 import (
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/application/find"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/todo"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/infrastructure/persistence/inmemory"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/application/find"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/todo"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/infrastructure/persistence/inmemory"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

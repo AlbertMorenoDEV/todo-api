@@ -2,8 +2,8 @@ package delete
 
 import (
 	"errors"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/internal/module/todo/domain/identifier"
-	"github.com/AlbertMorenoDEV/go-ddd-playground/pkg/infrastructure/bus/command"
+	"github.com/AlbertMorenoDEV/todo-api/internal/module/todo/domain/identifier"
+	"github.com/AlbertMorenoDEV/todo-api/pkg/infrastructure/bus/command"
 )
 
 type CommandHandler struct {
